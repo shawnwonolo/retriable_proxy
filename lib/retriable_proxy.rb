@@ -26,10 +26,8 @@ module RetriableProxy
     end
   
     # Forwards all methods not defined on the Wrapper to the wrapped object.
-    # Only supports ruby 3
-    def method_missing(*args, **kwargs, &block)
-      method_name = args[0]
-      __retrying(method_name) { @o.public_send(*args, **kwargs, &block) }
+    def method_missing(method_name, ...)
+      __retrying(method_name) { @o.public_send(method_name, ...) }
     end
   
     private
